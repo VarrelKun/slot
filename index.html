@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Truth or Dare Slot</title>
+    <title>Nge-Slot njir</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -48,23 +48,47 @@
         const slot2 = document.getElementById('slot2');
         const slot3 = document.getElementById('slot3');
 
+        function scrollSlot(slotElement, items, callback) {
+            let i = 0;
+            const interval = setInterval(() => {
+                slotElement.textContent = items[i];
+                i++;
+                if (i === items.length) {
+                    clearInterval(interval);
+                    callback();
+                }
+                if (i === items.length) {
+                    i = 0;
+                }
+            }, 100); // Scroll speed, change to adjust speed
+        }
+
         function spinSlots() {
-            // Generate random results for each slot
-            const result1 = truthQuestions[Math.floor(Math.random() * truthQuestions.length)];
-            const result2 = dareChallenges[Math.floor(Math.random() * dareChallenges.length)];
-            const result3 = truthQuestions[Math.floor(Math.random() * truthQuestions.length)];
+            const resultText = [truthQuestions, dareChallenges, truthQuestions];
 
-            // Display the results in slots
-            slot1.textContent = "Truth";
-            slot2.textContent = "Dare";
-            slot3.textContent = "Truth";
+            // Clear previous result
+            resultDiv.textContent = "Spinning...";
 
-            // Show final result based on slots
-            if (result1 === result2 && result2 === result3) {
-                resultDiv.textContent = `Truth: ${result1}`;
-            } else {
-                resultDiv.textContent = `Dare: ${result2}`;
-            }
+            // Start scrolling animation
+            scrollSlot(slot1, truthQuestions, () => {
+                const result1 = truthQuestions[Math.floor(Math.random() * truthQuestions.length)];
+                slot1.textContent = result1;
+            });
+            scrollSlot(slot2, dareChallenges, () => {
+                const result2 = dareChallenges[Math.floor(Math.random() * dareChallenges.length)];
+                slot2.textContent = result2;
+            });
+            scrollSlot(slot3, truthQuestions, () => {
+                const result3 = truthQuestions[Math.floor(Math.random() * truthQuestions.length)];
+                slot3.textContent = result3;
+
+                // After all slots stop scrolling, check if they match
+                if (result1 === result2 && result2 === result3) {
+                    resultDiv.textContent = `You got a matching result: ${result1}!`;
+                } else {
+                    resultDiv.textContent = `Try again!`;
+                }
+            });
         }
 
         spinButton.addEventListener('click', spinSlots);
