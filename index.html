@@ -3,13 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Njir Slot</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Mainan Slot Njir</title>
+    <style>
+        /* Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        /* Container Styling */
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        /* Heading Styling */
+        h1 {
+            color: #4CAF50;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        /* Subheading Styling */
+        p {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Slot Machine Styling */
+        .slot-machine {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            gap: 20px;
+            padding-bottom: 20px;
+        }
+
+        .slot {
+            background-color: #ddd;
+            width: 120px;
+            height: 120px;
+            font-size: 16px;
+            line-height: 120px;
+            font-weight: bold;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+            box-sizing: border-box;
+            color: #333;
+            min-width: 120px;
+            margin: 0 auto;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        /* Keyframe Animation for Spin */
+        @keyframes spinSlot {
+            0% {
+                transform: rotateX(0deg);
+            }
+            25% {
+                transform: rotateX(180deg);
+            }
+            50% {
+                transform: rotateX(360deg);
+            }
+            75% {
+                transform: rotateX(540deg);
+            }
+            100% {
+                transform: rotateX(720deg);
+            }
+        }
+
+        .slot.spinning {
+            animation: spinSlot 1s ease-in-out forwards;
+        }
+
+        /* Button Styling */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 30px;
+            transition: background-color 0.3s ease;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Result Text Styling */
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #ff6347;
+            min-height: 30px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Truth or Dare Slot</h1>
-        <p>Choose your bet: Truth or Dare?</p>
+        <h1>Slot</h1>
+        <p>YAYAYATWTWYWY</p>
 
         <!-- Slot Machine -->
         <div class="slot-machine">
@@ -25,13 +142,22 @@
     </div>
 
     <script>
-        // Arrays for Truth and Dare
+        // Arrays for Truth and Dare (with more challenges)
         const truthQuestions = [
             "What is your biggest fear?",
             "What is your most embarrassing moment?",
             "Have you ever lied to get out of trouble?",
             "What's the worst thing you've done to someone?",
-            "What is something you've never told anyone?"
+            "What is something you've never told anyone?",
+            "What was the last lie you told?",
+            "What’s the most awkward situation you’ve ever been in?",
+            "What’s your biggest insecurity?",
+            "If you could change one thing about your life, what would it be?",
+            "What’s the worst gift you’ve ever given or received?",
+            "Have you ever cheated on a test?",
+            "Have you ever kissed someone you shouldn’t have?",
+            "What’s the most trouble you’ve gotten into?",
+            "What’s the biggest mistake you’ve ever made?"
         ];
 
         const dareChallenges = [
@@ -39,7 +165,16 @@
             "Dance like nobody's watching for 1 minute.",
             "Call someone and sing 'Happy Birthday' to them.",
             "Post a funny selfie on your social media.",
-            "Eat a spoonful of hot sauce."
+            "Eat a spoonful of hot sauce.",
+            "Post something silly on your social media.",
+            "Take a selfie with the funniest face possible.",
+            "Talk in an accent for the next 5 minutes.",
+            "Try to juggle for 1 minute.",
+            "Do 30 sit-ups right now.",
+            "Pretend to be a waiter/waitress and take orders from the group.",
+            "Call your best friend and tell them a funny joke.",
+            "Do your best impression of a famous person.",
+            "Draw a funny picture with your non-dominant hand."
         ];
 
         const spinButton = document.getElementById('spinButton');
@@ -48,47 +183,41 @@
         const slot2 = document.getElementById('slot2');
         const slot3 = document.getElementById('slot3');
 
-        function scrollSlot(slotElement, items, callback) {
-            let i = 0;
-            const interval = setInterval(() => {
-                slotElement.textContent = items[i];
-                i++;
-                if (i === items.length) {
-                    clearInterval(interval);
-                    callback();
-                }
-                if (i === items.length) {
-                    i = 0;
-                }
-            }, 100); // Scroll speed, change to adjust speed
+        function getRandomItem(array) {
+            return array[Math.floor(Math.random() * array.length)];
         }
 
         function spinSlots() {
-            const resultText = [truthQuestions, dareChallenges, truthQuestions];
+            // Add the "spinning" class to start the spin animation
+            slot1.classList.add('spinning');
+            slot2.classList.add('spinning');
+            slot3.classList.add('spinning');
 
-            // Clear previous result
-            resultDiv.textContent = "Spinning...";
+            // After 1 second (duration of the animation), set the slot values and stop animation
+            setTimeout(() => {
+                // Random selection of Truth and Dare
+                const resultText = [getRandomItem(truthQuestions), getRandomItem(dareChallenges), getRandomItem(truthQuestions)];
 
-            // Start scrolling animation
-            scrollSlot(slot1, truthQuestions, () => {
-                const result1 = truthQuestions[Math.floor(Math.random() * truthQuestions.length)];
-                slot1.textContent = result1;
-            });
-            scrollSlot(slot2, dareChallenges, () => {
-                const result2 = dareChallenges[Math.floor(Math.random() * dareChallenges.length)];
-                slot2.textContent = result2;
-            });
-            scrollSlot(slot3, truthQuestions, () => {
-                const result3 = truthQuestions[Math.floor(Math.random() * truthQuestions.length)];
-                slot3.textContent = result3;
+                // Set slot values
+                slot1.textContent = resultText[0];
+                slot2.textContent = resultText[1];
+                slot3.textContent = resultText[2];
 
-                // After all slots stop scrolling, check if they match
-                if (result1 === result2 && result2 === result3) {
-                    resultDiv.textContent = `You got a matching result: ${result1}!`;
-                } else {
-                    resultDiv.textContent = `Try again!`;
-                }
-            });
+                // Clear animation classes so they can be applied again
+                slot1.classList.remove('spinning');
+                slot2.classList.remove('spinning');
+                slot3.classList.remove('spinning');
+
+                // Display result clearly below the slots
+                resultDiv.textContent = `You got: ${resultText[1]}`; // Show Dare result
+
+                // Reset slots to "?" after a brief delay (before user can spin again)
+                setTimeout(() => {
+                    slot1.textContent = "?";
+                    slot2.textContent = "?";
+                    slot3.textContent = "?";
+                }, 800); // Delay before reset (2 seconds)
+            }, 1000); // Duration of the spin animation
         }
 
         spinButton.addEventListener('click', spinSlots);
