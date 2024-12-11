@@ -1,0 +1,15 @@
+{
+  "name": "truth-or-dare-slot",
+  "version": "1.0.0",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "16.x"
+  }
+}
