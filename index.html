@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truth or Dare Slot</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Truth or Dare Slot</h1>
+        <p>Choose your bet: Truth or Dare?</p>
+
+        <!-- Slot Machine -->
+        <div class="slot-machine">
+            <div class="slot" id="slot1">?</div>
+            <div class="slot" id="slot2">?</div>
+            <div class="slot" id="slot3">?</div>
+        </div>
+
+        <button id="spinButton">Spin the Slots</button>
+
+        <!-- Truth or Dare results -->
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        // Arrays for Truth and Dare
+        const truthQuestions = [
+            "What is your biggest fear?",
+            "What is your most embarrassing moment?",
+            "Have you ever lied to get out of trouble?",
+            "What's the worst thing you've done to someone?",
+            "What is something you've never told anyone?"
+        ];
+
+        const dareChallenges = [
+            "Do 20 push-ups.",
+            "Dance like nobody's watching for 1 minute.",
+            "Call someone and sing 'Happy Birthday' to them.",
+            "Post a funny selfie on your social media.",
+            "Eat a spoonful of hot sauce."
+        ];
+
+        const spinButton = document.getElementById('spinButton');
+        const resultDiv = document.getElementById('result');
+        const slot1 = document.getElementById('slot1');
+        const slot2 = document.getElementById('slot2');
+        const slot3 = document.getElementById('slot3');
+
+        function spinSlots() {
+            // Generate random results for each slot
+            const result1 = truthQuestions[Math.floor(Math.random() * truthQuestions.length)];
+            const result2 = dareChallenges[Math.floor(Math.random() * dareChallenges.length)];
+            const result3 = truthQuestions[Math.floor(Math.random() * truthQuestions.length)];
+
+            // Display the results in slots
+            slot1.textContent = "Truth";
+            slot2.textContent = "Dare";
+            slot3.textContent = "Truth";
+
+            // Show final result based on slots
+            if (result1 === result2 && result2 === result3) {
+                resultDiv.textContent = `Truth: ${result1}`;
+            } else {
+                resultDiv.textContent = `Dare: ${result2}`;
+            }
+        }
+
+        spinButton.addEventListener('click', spinSlots);
+    </script>
+</body>
+</html>
